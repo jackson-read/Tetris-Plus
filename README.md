@@ -5,7 +5,7 @@ A recreation of the classic game Tetris, built in Qt. Designed to provide an ent
 ---
 ## Team members
 
- jackson Read
+Jackson Read
 
 Patrick Riley
 
