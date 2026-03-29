@@ -1,10 +1,21 @@
 # Tetris Plus
 
-<sub>A recreation of the classic game Tetris, built in Qt. Designed to provide an entertaining experience with different game modes and difficulties
+A recreation of the classic game Tetris, built in Qt. Designed to provide an entertaining experience with different game modes and difficulties
+
+---
+## Team members
+
+ jackson Read
+
+Patrick Riley
+
+Gabriel Luis
+
 ---
 ## About
 
-<sub>This project brings the timeless gameplay loop of Tetris, and adds modern features like score tracking, profile creation, multiple game modes and varying difficulties
+This project brings the timeless gameplay loop of Tetris, and adds modern features like score tracking, profile creation, multiple game modes and varying difficulties
+
 ---
 ## All Planned Features
 ### Point Gain system
