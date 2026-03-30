@@ -1,2 +1,5 @@
-﻿  main.cpp
-  Tetris Plus.vcxproj -> C:\Users\jacks_rhlpvr\OneDrive\Programming 2\Tetris Plus\x64\Debug\Tetris Plus.exe
+﻿  blocks.cpp
+  Engine.cpp
+  Generating Code...
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Users\jacks_rhlpvr\OneDrive\Programming 2\Tetris Plus\x64\Debug\Tetris Plus.exe : fatal error LNK1120: 1 unresolved externals
