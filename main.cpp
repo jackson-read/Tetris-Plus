@@ -13,12 +13,93 @@ private:
     const int columns = 10;
    
     std::vector<std::vector<int>> grid;
+    int dropIntervalMs = 1000;
+    int dropAccumulatorMs = 0;
+    bool gameOver = false;
 
 public:
     GameEngine() {
         score = 0;
-        
+        activeBlock = nullptr;
+
         grid = std::vector<std::vector<int>>(rows, std::vector<int>(columns, 0));
+    }
+
+    ~GameEngine() {
+        if (activeBlock) delete activeBlock;
+    }
+
+    bool canPlace(Block* b, int x, int y, bool rotated = false) {
+        if (!b) return false;
+        std::vector<std::pair<int,int>> cells;
+        if (rotated) cells = b->getRotatedCells();
+        else cells = b->getCells();
+
+        for (auto &c : cells) {
+            int worldX = x + c.first;
+            int worldY = y + c.second;
+
+            if (worldX < 0 || worldX >= columns || worldY < 0 || worldY >= rows) return false;
+            if (grid[worldY][worldX] != 0) return false;
+        }
+        return true;
+    }
+
+    void lockActiveBlock() {
+        if (!activeBlock) return;
+
+        for (auto &c : activeBlock->getCells()) {
+            int worldX = activeBlock->getX() + c.first;
+            int worldY = activeBlock->getY() + c.second;
+            if (worldY >= 0 && worldY < rows && worldX >= 0 && worldX < columns)
+                grid[worldY][worldX] = 1; 
+        }
+
+        delete activeBlock;
+        activeBlock = nullptr;
+
+        checkLines();
+    }
+
+    void SpawnNextBlock(){
+        if (activeBlock) delete activeBlock;
+        int randomBlock = rand() % 7;
+        int startX = 3;
+        int startY = 0; 
+
+        switch (randomBlock) {
+        case 0: activeBlock = new TBlock(startX, startY); break;
+        case 1: activeBlock = new OBlock(startX, startY); break;
+        case 2: activeBlock = new IBlock(startX, startY); break;
+        case 3: activeBlock = new LBlock(startX, startY); break;
+        case 4: activeBlock = new JBlock(startX, startY); break;
+        case 5: activeBlock = new ZBlock(startX, startY); break;
+        case 6: activeBlock = new SBlock(startX, startY); break;
+        }
+
+        if (!canPlace(activeBlock, activeBlock->getX(), activeBlock->getY())) {
+            gameOver = true;
+        }
+    }
+
+    void update(int deltaMs) {
+        if (gameOver) return;
+
+        dropAccumulatorMs += deltaMs;
+        if (!activeBlock) SpawnNextBlock();
+
+        while (dropAccumulatorMs >= dropIntervalMs && !gameOver) {
+            dropAccumulatorMs -= dropIntervalMs;
+
+            int nx = activeBlock->getX();
+            int ny = activeBlock->getY() + 1;
+            if (canPlace(activeBlock, nx, ny)) {
+                activeBlock->move(0,1);
+            } else {
+                lockActiveBlock();
+                SpawnNextBlock();
+            }
+        }
     }
 
     void checkLines() {
@@ -51,22 +132,6 @@ public:
     int getScore() const { return score; }
     std::vector<std::vector<int>> getGrid() const { return grid; }
 
-    void SpawnNextBlock(){
-        
-        int randomBlock = rand() % 7;
-        int startX = 3;
-        int startY = 2;
-
-        switch (randomBlock) {
-        case 0: activeBlock = new TBlock(startX, startY); break;
-        case 1: activeBlock = new OBlock(startX, startY); break;
-        case 2: activeBlock = new IBlock(startX, startY); break;
-        case 3: activeBlock = new LBlock(startX, startY); break;
-        case 4: activeBlock = new JBlock(startX, startY); break;
-        case 5: activeBlock = new ZBlock(startX, startY); break;
-        case 6: activeBlock = new SBlock(startX, startY); break;
-        }
-    }
 };
 
 int main() {

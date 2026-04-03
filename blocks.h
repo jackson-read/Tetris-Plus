@@ -32,6 +32,23 @@ public:
 	TetrisColor getColor() const { return color; }
 	int getX() const { return x_pos; }
 	int getY() const { return y_pos; }
+
+	void move(int dx, int dy) { x_pos += dx; y_pos += dy; }
+
+	void setPosition(int x, int y) { x_pos = x; y_pos = y; }
+
+	std::vector<std::pair<int,int>> getRotatedCells() const {
+		std::vector<std::pair<int,int>> out;
+		out.reserve(cells.size());
+		for (auto &cell : cells) {
+			int old_x = cell.first;
+			int old_y = cell.second;
+			int new_x = (gridSize - 1) - old_y;
+			int new_y = old_x;
+			out.emplace_back(new_x, new_y);
+		}
+		return out;
+	}
 };
 
 class TBlock : public Block {
