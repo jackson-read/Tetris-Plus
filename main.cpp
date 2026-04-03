@@ -2,7 +2,7 @@
 #include <vector>
 
 
-void Engine() {
+void Grid() {
 	int score = 0;
 	bool fullRow = true;
 	int rows = 20;

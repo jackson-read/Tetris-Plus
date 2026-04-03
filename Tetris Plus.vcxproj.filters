@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="blocks.cpp">
+    <ClCompile Include="blocks.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
