@@ -67,17 +67,31 @@ public:
         case 6: activeBlock = new SBlock(startX, startY); break;
         }
     }
+
+    void PrintGrid() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (grid[i][j] == 0) {
+                    std::cout << "0";
+                }
+                else {
+                    std::cout << "1";
+                }
+            }
+            
+            std::cout << "\n";
+        }
+        
+    }
 };
 
 int main() {
     srand(time(0));
-
     GameEngine engine;
 
-    int e = rand() % 100;
-    std::cout << e;
 
     std::cout << "Engine initialized. Current Score: " << engine.getScore() << std::endl;
+    engine.PrintGrid();
 
     return 0;
 }
